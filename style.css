@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box; 
+}
+
+:root {
+    --gap: 8px;
+}
+
+body {
+    margin: 0;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    font-family: system-ui, sans-serif;
+}
+
+.container {
+    width: min(90vw, 840px);
+    padding: 16px;
+}
+
+.hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    width: min(90vmin, 480px);
+    aspect-ratio: 1 / 1;
+    border: 2px solid #222;
+    border-radius: 12px;
+    padding: var(--gap);
+}
+
+.cell {
+    flex: 1 0 calc(33.333% - var(--gap));
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-items: center;
+    background: #f2f2f2;
+    border: 2px solid #bbb;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cell:focus {
+    outline: 3px solid #0a7;
+    outline-offset: 2px;
+}
+
+/* Temporär visuell mullvad , byt gärna mot egen grafik. */
+.cell .mole {
+    width: 65%;
+    height: 65%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 60%, #5b3b1a, #2d1a0a 60%, #000 100%);
+}
