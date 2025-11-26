@@ -17,19 +17,47 @@ body {
 
 h1 {
     text-align: center;
+    font-size: 3.5rem;
+    color: #fff;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    color: #fff;
+    font-size: 2rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+#startBtn, #resetBtn {
+    padding: 10px;
+    font-family: "Slackey";
+    font-size: 1.5rem;
+    background: #fff;
+    border-radius: 25px;
+    color: #000;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#startBtn:hover, #resetBtn:hover {
+    transform: scale(1.08);
 }
 
 .container {
     width: min(90vw, 840px);
-    padding: 16px;
-}
-
-.hud {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
 }
 
 .board {
@@ -38,7 +66,6 @@ h1 {
     gap: var(--gap);
     width: min(90vmin, 480px);
     aspect-ratio: 1 / 1;
-    border: 2px solid #222;
     border-radius: 12px;
     padding: var(--gap);
 }
@@ -48,21 +75,23 @@ h1 {
     aspect-ratio: 1 / 1;
     display: grid;
     place-items: center;
-    background: #f2f2f2;
-    border: 2px solid #bbb;
-    border-radius: 10px;
+    background: #000;
+    border: 2px;
+    border-radius: 20px;
     cursor: pointer;
 }
 
-.cell:focus {
-    outline: 3px solid #0a7;
+.cell:focus, #startBtn:focus, #resetBtn:focus {
+    outline: 5px solid red;     
     outline-offset: 2px;
 }
 
-/* Temporär visuell mullvad , byt gärna mot egen grafik. */
 .cell .mole {
-    width: 65%;
-    height: 65%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 60%, #5b3b1a, #2d1a0a 60%, #000 100%);
+    width: 90%;
+    height: 90%;
+    background: url("./img/ChatGPT\ Image\ Nov\ 26\,\ 2025\,\ 10_38_04\ AM.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
+
