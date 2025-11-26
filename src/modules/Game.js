@@ -50,31 +50,76 @@ export class Game {
     this.state.timeLeft = this.duration;
     this.updateHud();
 
-    // TODO: implementera spelloop
-    // 1) setInterval: nedräkning av timeLeft
-    // 2) setInterval eller rekursiva setTimeout: spawn av mullvadar (variera TTL/frekvens över tid)
+    this._tickId = setInterval(() => {
+      this.state.timeLeft--;
+      this.updateHud();
+      if (this.state.timeLeft <= 0) {
+         this.state.running = false;
+         clearInterval(this._tickId);
+      }
+    }, 1000);
+
+    this._spawnId = setInterval(() => {
+      if (!this.state.running) {
+         clearInterval(this._spawnId);
+         return;
+      }
+
+      this.spawnMole();
+
+    }, 700);
+
+    this.spawnMole();
  }
 
  reset() {
- // TODO: städa timers, ta bort aktiva mullvadar, nollställ state och UI
- // Tips: loopa this._activeMoles och kalla .disappear()
+   clearInterval(this._tickId);
+   clearInterval(this._spawnId);
+
+   for (const mole of this._activeMoles) {
+      mole.disappear();
+   }
+
+   this._activeMoles.clear();
+
+   this.state.score = 0;
+   this.state.misses = 0;
+   this.state.timeLeft = this.duration;
+   this.state.running = false;
+
+   this.updateHud();
  }
 
  spawnMole() {
- // TODO: välj slumpmässig tom cell och mounta en ny Mole
- // const emptyCells = [...this.boardEl.querySelectorAll('.cell:not(.hasmole)')];
- // const cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
- // const mole = new Mole(cell, /* ttl i ms */);
- // this._activeMoles.add(mole);
- // mole.appear(() => { this._activeMoles.delete(mole); /* miss om utgång utan träff? */ });
+   const emptyCells = [...this.boardEl.querySelectorAll('.cell:not(.has-mole)')];
+   const cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+   const mole = new Mole(cell, 1000);
+   this._activeMoles.add(mole);
+   mole.appear(() => { 
+      this._activeMoles.delete(mole);
+      this.state.misses++; // räknas som miss
+      this.updateHud(); // uppdatera texten
+   });
  }
 
  handleBoardClick(e) {
     const cell = e.target.closest('.cell');
     if (!cell || !this.state.running) return;
 
- // TODO: om cellen innehåller en aktiv mullvad => poäng; annars öka missar
- // Uppdatera HUD varje gång.
+    if (cell.classList.contains('has-mole')) {
+      for (const mole of this._activeMoles) {
+         if (mole.cellEl === cell) {
+            mole.disappear();
+            this._activeMoles.delete(mole);
+            this.state.score++;
+            this.updateHud();
+            return;
+         }
+      }
+    } else {
+      this.state.misses++;
+      this.updateHud();
+    }
  }
 
  updateHud() {

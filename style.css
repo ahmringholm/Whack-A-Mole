@@ -11,7 +11,12 @@ body {
     min-height: 100dvh;
     display: grid;
     place-items: center;
-    font-family: system-ui, sans-serif;
+    font-family: "Slackey", sans-serif;
+    background-image: url(img/background-of-green-grass-field-cartoon-drawing-free-vector.jpg);
+}
+
+h1 {
+    text-align: center;
 }
 
 .container {
